@@ -1,3 +1,4 @@
+<h1>Profiles List</h1>
 <table>
     <thead>
         <tr>

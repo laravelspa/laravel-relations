@@ -1,19 +1,19 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Resources\ProfileResource;
+use App\Http\Resources\UserResource;
+use App\Models\Profile;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "api" middleware group. Make something great!
-|
-*/
+Route::get('/users', function () {
+    $users = User::with(['profile', 'posts'])->get();
+    $usersResource = UserResource::collection($users);
+    return response()->json($usersResource);
+});
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::get('/profiles', function () {
+    $profiles = Profile::with(['user'])->get();
+    $profilesResource = ProfileResource::collection($profiles);
+    return response()->json($profilesResource);
 });
